@@ -8,6 +8,7 @@ import numpy as np
 from imutils.video import FPS
 from imutils.video import VideoStream
 import copyreg
+from functions import *
 # load serialized face detector
 present = []
 print("Loading Face Detector...")

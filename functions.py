@@ -51,6 +51,7 @@ def create_atten_sheet():
 
 def mark_atten(userId, day, status):
     sheet = create_atten_sheet()
+    syncMastersheet(sheet)
     row = sheet.find(userId)
     if row is None:
         return False
@@ -69,3 +70,16 @@ def get_users():
                 str(row['password']).encode("utf-8"), bcrypt.gensalt())
         })
     return users
+
+def syncMastersheet(sheet):
+    master_sheet = get_sheet('master')
+    # sheet = create_atten_sheet()
+    i=2
+    for row in master_sheet.get_all_records():
+        #sheet.append_row(new_row,table_range='A'+str(i)+':C'+str(i))
+        sheet.update('A'+str(i),row['userId'])
+        sheet.update('B'+str(i),row['name'])
+        sheet.update('C'+str(i),row['batch'])
+        i+=1
+    print("Master Sheet Synced With "+sheet.title) 
+

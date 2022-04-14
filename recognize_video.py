@@ -99,7 +99,7 @@ while True:
                           2)
             cv2.putText(frame, text, (startX, y), cv2.FONT_HERSHEY_SIMPLEX,
                         0.45, (0, 0, 255), 2)
-            if name not in present and proba * 100 > 55:
+            if name not in present and proba * 100 > 70:
                 present.append(name)
                 print(name, " is Identified")
                 if(mark_atten(name,int(datetime.datetime.now().day),'P' )):

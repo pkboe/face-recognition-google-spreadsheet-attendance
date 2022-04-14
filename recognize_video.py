@@ -42,7 +42,7 @@ fps = FPS().start()
 
 # loop over frames from the video file stream
 while True:
-    # grab the frame from the threaded video stream
+    # grab the frame from the threaded video str  eam
     frame = vs.read()
 
     # resize the frame to have a width of 600 pixels (while maintaining the aspect ratio), and then grab the image dimensions
@@ -99,10 +99,11 @@ while True:
                           2)
             cv2.putText(frame, text, (startX, y), cv2.FONT_HERSHEY_SIMPLEX,
                         0.45, (0, 0, 255), 2)
-            if name not in present and proba * 100 > 80:
+            if name not in present and proba * 100 > 55:
                 present.append(name)
-
-                print(name, " is Marked Present!")
+                print(name, " is Identified")
+                if(mark_atten(name,int(datetime.datetime.now().day),'P' )):
+                    print(name, " : Attendance Marked")
                 print("\n")
 
     # update the FPS counter

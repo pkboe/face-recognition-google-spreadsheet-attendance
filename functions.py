@@ -73,13 +73,18 @@ def get_users():
 
 def syncMastersheet(sheet):
     master_sheet = get_sheet('master')
+    master_records = master_sheet.get_all_records()
+    sheet_records = sheet.get_all_records()
+    if len(master_records) != len(sheet_records):
     # sheet = create_atten_sheet()
-    i=2
-    for row in master_sheet.get_all_records():
-        #sheet.append_row(new_row,table_range='A'+str(i)+':C'+str(i))
-        sheet.update('A'+str(i),row['userId'])
-        sheet.update('B'+str(i),row['name'])
-        sheet.update('C'+str(i),row['batch'])
-        i+=1
-    print("Master Sheet Synced With "+sheet.title) 
+        i=2
+        for row in master_records:
+            #sheet.append_row(new_row,table_range='A'+str(i)+':C'+str(i))
+            sheet.update('A'+str(i),row['userId'])
+            sheet.update('B'+str(i),row['name'])
+            sheet.update('C'+str(i),row['batch'])
+            i+=1
+        print("Master Sheet Synced With "+sheet.title) 
+    else:     
+        print("Master Sheet Not Synced, Sheet Size Matches with Master Sheet")
 

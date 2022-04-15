@@ -15,6 +15,7 @@ credential = ServiceAccountCredentials.from_json_keyfile_name(
 client = gspread.authorize(credential)
 spreadhseetId = '1Vyxb199JJZGeFIN2H0EE_r4V2SV2lhmSL_WipnA2ay0'
 spreadsheet = client.open_by_key(spreadhseetId)
+signLock_COL=4
 
 # for sheet in spreadsheet.worksheets():
 #     print('sheetName: {}, sheetId(GID): {}'.format(sheet.title, sheet.id))
@@ -88,3 +89,23 @@ def syncMastersheet(sheet):
     else:     
         print("Master Sheet Not Synced, Sheet Size Matches with Master Sheet")
 
+def checkLock(userId):
+    sheet = get_sheet('master')
+    row = sheet.find(userId)
+    if row is None:
+        return None
+    else:
+        if sheet.cell(row.row, signLock_COL).value == 'TRUE':
+            return True
+        else:
+            return False
+
+def setLock(userId, status):
+    status = 'TRUE' if status == True else 'FALSE'
+    sheet = get_sheet('master')
+    row = sheet.find(userId)
+    if row is None:
+            return None
+    else:
+        sheet.update_cell(row.row, signLock_COL, status)
+        return True
